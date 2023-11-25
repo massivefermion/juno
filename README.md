@@ -1,5 +1,5 @@
 <!-- ![juno](https://raw.githubusercontent.com/massivefermion/bison/main/banner.png) -->
-![juno](https://raw.githubusercontent.com/massivefermion/bison/main/banner.png)
+![juno](https://raw.githubusercontent.com/massivefermion/juno/main/banner.png)
 
 [![Package Version](https://img.shields.io/hexpm/v/juno)](https://hex.pm/packages/juno)
 [![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/juno)

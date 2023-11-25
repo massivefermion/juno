@@ -1,0 +1,14 @@
+name = "juno"
+version = "1.0.0"
+
+description = "Flexible JSON decoding"
+licences = ["Apache-2.0"]
+links = [{title = "Gleam", href = "https://gleam.run"}]
+repository = {type = "github", user = "massivefermion", repo = "juno"}
+
+[dependencies]
+gleam_json = "~> 0.7"
+gleam_stdlib = "~> 0.32"
+
+[dev-dependencies]
+gleeunit = "~> 1.0"

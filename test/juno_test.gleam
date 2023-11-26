@@ -1,5 +1,6 @@
 import gleam/map
 import gleam/dynamic
+import gleam/json
 import gleeunit
 import gleeunit/should
 import juno
@@ -27,6 +28,67 @@ pub fn decode_test() {
     )
 
   juno.decode(json, [active_player_decoder, game_decoder])
+  |> should.be_ok
+  |> should.equal(get_map())
+}
+
+pub fn decode_number_test() {
+  let active_player_decoder =
+    dynamic.decode3(
+      Player,
+      dynamic.field("id", dynamic.string),
+      dynamic.field("score", dynamic.int),
+      dynamic.field("eliminated", dynamic.bool),
+    )
+
+  let game_decoder =
+    dynamic.decode4(
+      Game,
+      dynamic.field("id", dynamic.string),
+      dynamic.field("players", dynamic.list(dynamic.string)),
+      dynamic.field("winner", dynamic.string),
+      dynamic.field("prize", dynamic.string),
+    )
+
+  juno.decode(
+    30.2
+    |> json.float
+    |> json.to_string,
+    [active_player_decoder, game_decoder],
+  )
+  |> should.be_ok
+  |> should.equal(juno.Float(30.2))
+}
+
+pub fn decode_object_string_error_test() {
+  juno.decode_object(
+    "Gattaca"
+    |> json.string
+    |> json.to_string,
+    [],
+  )
+  |> should.be_error
+}
+
+pub fn decode_object_test() {
+  let active_player_decoder =
+    dynamic.decode3(
+      Player,
+      dynamic.field("id", dynamic.string),
+      dynamic.field("score", dynamic.int),
+      dynamic.field("eliminated", dynamic.bool),
+    )
+
+  let game_decoder =
+    dynamic.decode4(
+      Game,
+      dynamic.field("id", dynamic.string),
+      dynamic.field("players", dynamic.list(dynamic.string)),
+      dynamic.field("winner", dynamic.string),
+      dynamic.field("prize", dynamic.string),
+    )
+
+  juno.decode_object(json, [active_player_decoder, game_decoder])
   |> should.be_ok
   |> should.equal(get_map())
 }

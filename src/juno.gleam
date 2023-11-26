@@ -19,6 +19,10 @@ pub fn decode(json: String, custom_decoders: List(dynamic.Decoder(a))) {
   json.decode(json, value(_, list.map(custom_decoders, wrap)))
 }
 
+pub fn decode_object(json: String, custom_decoders: List(dynamic.Decoder(a))) {
+  json.decode(json, object(list.map(custom_decoders, wrap)))
+}
+
 fn wrap(decoder) {
   dynamic.decode1(Custom, decoder)(_)
 }

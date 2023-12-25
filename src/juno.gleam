@@ -1,4 +1,4 @@
-import gleam/map
+import gleam/dict
 import gleam/list
 import gleam/option
 import gleam/dynamic
@@ -12,7 +12,7 @@ pub type Value(a) {
   Float(Float)
   String(String)
   Array(List(Value(a)))
-  Object(map.Map(String, Value(a)))
+  Object(dict.Dict(String, Value(a)))
 }
 
 pub fn decode(json: String, custom_decoders: List(dynamic.Decoder(a))) {
@@ -29,17 +29,14 @@ fn wrap(decoder) {
 
 fn value(dyn, custom_decoders) {
   let value_decoders =
-    list.append(
-      custom_decoders,
-      [
-        int(),
-        bool(),
-        float(),
-        string(),
-        array(custom_decoders),
-        object(custom_decoders),
-      ],
-    )
+    list.append(custom_decoders, [
+      int(),
+      bool(),
+      float(),
+      string(),
+      array(custom_decoders),
+      object(custom_decoders),
+    ])
 
   case dynamic.optional(dynamic.any(value_decoders))(dyn) {
     Ok(option.Some(value)) -> Ok(value)
@@ -51,7 +48,7 @@ fn value(dyn, custom_decoders) {
 fn object(custom_decoders) {
   dynamic.decode1(
     Object,
-    dynamic.map(dynamic.string, value(_, custom_decoders)),
+    dynamic.dict(dynamic.string, value(_, custom_decoders)),
   )(_)
 }
 

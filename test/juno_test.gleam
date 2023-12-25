@@ -1,4 +1,4 @@
-import gleam/map
+import gleam/dict
 import gleam/dynamic
 import gleam/json
 import gleeunit
@@ -156,36 +156,47 @@ const json = "{
     }"
 
 fn get_map() {
-  juno.Object(map.from_list([
-    #(
-      "2023-11-24",
-      juno.Object(map.from_list([
-        #("weather", juno.String("rainy")),
-        #("14:00", juno.Custom(Game("G528", ["P10", "P6"], "P10", "vacation"))),
-        #(
-          "16:00->21:00",
-          juno.Array([
-            juno.Custom(Game("G561", ["P10", "P3"], "P10", "toaster")),
-            juno.Custom(Game("G595", ["P3", "P6"], "P3", "car")),
+  juno.Object(
+    dict.from_list([
+      #(
+        "2023-11-24",
+        juno.Object(
+          dict.from_list([
+            #("weather", juno.String("rainy")),
+            #(
+              "14:00",
+              juno.Custom(Game("G528", ["P10", "P6"], "P10", "vacation")),
+            ),
+            #(
+              "16:00->21:00",
+              juno.Array([
+                juno.Custom(Game("G561", ["P10", "P3"], "P10", "toaster")),
+                juno.Custom(Game("G595", ["P3", "P6"], "P3", "car")),
+              ]),
+            ),
+            #(
+              "attending",
+              juno.Object(
+                dict.from_list([
+                  #(
+                    "anton",
+                    juno.Object(
+                      dict.from_list([
+                        #("id", juno.String("P36")),
+                        #("eliminated", juno.Bool(True)),
+                        #("scores", juno.Array([juno.Int(45), juno.Int(55)])),
+                      ]),
+                    ),
+                  ),
+                  #("gerome", juno.Custom(Player("P6", 15, False))),
+                  #("irene", juno.Custom(Player("P10", 21, False))),
+                  #("vincent", juno.Custom(Player("P3", 28, False))),
+                ]),
+              ),
+            ),
           ]),
         ),
-        #(
-          "attending",
-          juno.Object(map.from_list([
-            #(
-              "anton",
-              juno.Object(map.from_list([
-                #("id", juno.String("P36")),
-                #("eliminated", juno.Bool(True)),
-                #("scores", juno.Array([juno.Int(45), juno.Int(55)])),
-              ])),
-            ),
-            #("gerome", juno.Custom(Player("P6", 15, False))),
-            #("irene", juno.Custom(Player("P10", 21, False))),
-            #("vincent", juno.Custom(Player("P3", 28, False))),
-          ])),
-        ),
-      ])),
-    ),
-  ]))
+      ),
+    ]),
+  )
 }

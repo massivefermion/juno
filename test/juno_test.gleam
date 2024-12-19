@@ -1,8 +1,10 @@
 import gleam/dict
 import gleam/dynamic
 import gleam/json
+
 import gleeunit
 import gleeunit/should
+
 import juno
 
 pub fn main() {
@@ -52,8 +54,8 @@ pub fn decode_number_test() {
 
   juno.decode(
     30.2
-    |> json.float
-    |> json.to_string,
+      |> json.float
+      |> json.to_string,
     [active_player_decoder, game_decoder],
   )
   |> should.be_ok
@@ -63,8 +65,8 @@ pub fn decode_number_test() {
 pub fn decode_object_string_error_test() {
   juno.decode_object(
     "Gattaca"
-    |> json.string
-    |> json.to_string,
+      |> json.string
+      |> json.to_string,
     [],
   )
   |> should.be_error

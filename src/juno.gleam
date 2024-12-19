@@ -1,8 +1,8 @@
 import gleam/dict
-import gleam/list
-import gleam/option
 import gleam/dynamic
 import gleam/json
+import gleam/list
+import gleam/option
 
 pub type Value(a) {
   Null
